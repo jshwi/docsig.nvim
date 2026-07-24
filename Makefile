@@ -60,7 +60,8 @@ clean:
 ../../scripts/check_coverage.py: ../../.venv/bin/python
 
 .venv/bin/stylua: .venv/bin/activate
-	@.venv/bin/pip install -q git+https://github.com/johnnymorganz/stylua@v2.5.2
+	@.venv/bin/pip install -q \
+		git+https://github.com/johnnymorganz/stylua@v$(STYLUA_VERSION)
 	@touch $@
 
 ../../build/docsig.pyz:
