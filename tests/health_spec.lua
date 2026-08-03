@@ -10,6 +10,7 @@ describe("health", function()
     return {
       calls = calls,
       start = record("start"),
+      info = record("info"),
       ok = record("ok"),
       error = record("error"),
     }
@@ -50,7 +51,8 @@ describe("health", function()
     vim.g.docsig = {}
     local reporter = capture_reporter()
     fresh_health().check(reporter)
-    assert.equals(kinds(reporter.calls), "start ok ok ok")
+    assert.equals(kinds(reporter.calls), "start info ok ok ok")
+    assert.truthy(reporter.calls[2].msg:match("^docsig%.nvim %d+%.%d+%.%d+$"))
   end)
 
   it("check defaults reporter to vim.health", function()
@@ -97,7 +99,7 @@ describe("health", function()
     end)
     vim.fn.has = old_has
     assert.truthy(ok, err)
-    assert.equals(kinds(reporter.calls), "start error error error")
+    assert.equals(kinds(reporter.calls), "start info error error error")
   end)
 
   it("check reports unsupported python version", function()
@@ -115,7 +117,7 @@ describe("health", function()
         MIN_MINOR = 10,
       },
     }).check(reporter)
-    assert.equals(kinds(reporter.calls), "start ok error ok")
-    assert.truthy(reporter.calls[3].msg:match("below minimum"))
+    assert.equals(kinds(reporter.calls), "start info ok error ok")
+    assert.truthy(reporter.calls[4].msg:match("below minimum"))
   end)
 end)
