@@ -15,10 +15,6 @@ function M.check(reporter)
 
   health.start("docsig")
 
-  -- report the version first so a bug report carries it without the
-  -- reporter having to work out where the plugin was installed from
-  health.info("docsig.nvim " .. config.PLUGIN_VERSION)
-
   if vim.fn.has("nvim-0.10") == 1 then
     health.ok("Neovim 0.10+")
   else
